@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterPembeliController;
 use App\Http\Controllers\Auth\RegisterPenjualController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PenjualController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,3 +54,31 @@ Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])
 
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])
     ->name('google.callback');
+
+Route::middleware(['auth'])->prefix('penjual')->name('penjual.')->group(function () {
+    Route::get('/kategori', [CategoryController::class, 'index'])
+        ->name('kategori.index');
+
+    Route::get('/kategori/tambah', [CategoryController::class, 'create'])
+        ->name('kategori.create');
+
+    Route::post('/kategori', [CategoryController::class, 'store'])
+        ->name('kategori.store');
+
+    Route::get('/kategori/{kategori}/edit', [CategoryController::class, 'edit'])
+        ->name('kategori.edit');
+
+    Route::put('/kategori/{kategori}', [CategoryController::class, 'update'])
+        ->name('kategori.update');
+
+    Route::delete('/kategori/{kategori}', [CategoryController::class, 'destroy'])
+        ->name('kategori.destroy');
+
+    Route::get('/profil-toko', function () {
+        $store = auth()->user()->store;
+
+        abort_if(!$store, 403, 'Data toko tidak ditemukan.');
+
+        return view('penjual.profil', compact('store'));
+    })->name('profil');
+});
