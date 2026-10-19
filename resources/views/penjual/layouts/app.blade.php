@@ -379,26 +379,53 @@
             }
         }
 
+
+
         /* HP */
         @media (max-width: 600px) {
             .sidebar {
                 width: 75px;
             }
 
+
             .brand {
-                height: 85px;
-                min-height: 85px;
-                padding: 10px;
-                justify-content: center;
+                height: 100px;
+                min-height: 100px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 20px 26px;
+                background: linear-gradient(120deg,
+                        #075c46 0%,
+                        #004d3c 55%,
+                        #00634b 100%);
+                font-size: 23px;
+                font-weight: bold;
+                white-space: nowrap;
             }
 
             .brand-icon {
                 width: 42px;
                 height: 42px;
                 min-width: 42px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #ffffff;
+                border-radius: 11px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+                font-size: 21px;
             }
 
-            .brand-text,
+            .brand-text {
+                color: #ffffff;
+                letter-spacing: -0.6px;
+            }
+
+            .brand-text span {
+                color: #65d6ad;
+            }
+
             .menu-title,
             .menu-label,
             .store-info,
@@ -480,25 +507,16 @@
     <aside class="sidebar">
 
         <!-- LOGO SEMBAKOGO -->
-        <div class="brand">
-            <span class="brand-icon">
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#64748b"
-                    stroke-width="1.7"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-label="Keranjang belanja"
-                    role="img">
-                    <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.5L21 8H6" />
-                    <circle cx="10" cy="20" r="1" />
-                    <circle cx="18" cy="20" r="1" />
-                    <path d="M9 10h8M10 13h6" />
-                </svg>
-            </span>
 
-            <span class="brand-text">Sembako<span>Go</span></span>
+        <!-- LOGO SEMBAKOGO -->
+        <div class="brand">
+            <div class="brand-icon">
+                🛒
+            </div>
+
+            <span class="brand-text">
+                Sembako<span>Go</span>
+            </span>
         </div>
 
         <!-- MENU UTAMA -->
@@ -522,6 +540,14 @@
                 <span class="menu-icon">▦</span>
                 <span class="menu-label">Kategori</span>
             </a>
+
+
+            <a href="{{ route('penjual.produk.index') }}"
+                class="sidebar-link {{ request()->routeIs('penjual.produk.*') ? 'active' : '' }}">
+                <span class="sidebar-icon">📦</span>
+                <span>Produk</span>
+            </a>
+
         </nav>
 
         <!-- INFORMASI TOKO DAN LOGOUT -->

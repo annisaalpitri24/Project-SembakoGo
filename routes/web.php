@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterPembeliController;
 use App\Http\Controllers\Auth\RegisterPenjualController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PenjualController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -81,4 +82,22 @@ Route::middleware(['auth'])->prefix('penjual')->name('penjual.')->group(function
 
         return view('penjual.profil', compact('store'));
     })->name('profil');
+
+    Route::get('/produk', [ProductController::class, 'index'])
+        ->name('produk.index');
+
+    Route::get('/produk/tambah', [ProductController::class, 'create'])
+        ->name('produk.create');
+
+    Route::post('/produk', [ProductController::class, 'store'])
+        ->name('produk.store');
+
+    Route::get('/produk/{product}/edit', [ProductController::class, 'edit'])
+        ->name('produk.edit');
+
+    Route::put('/produk/{product}', [ProductController::class, 'update'])
+        ->name('produk.update');
+
+    Route::delete('/produk/{product}', [ProductController::class, 'destroy'])
+        ->name('produk.destroy');
 });

@@ -23,4 +23,9 @@ class Store extends Model
     {
         return $this->hasMany(\App\Models\Category::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(\App\Models\Product::class);
+    }
 }
