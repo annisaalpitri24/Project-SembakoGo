@@ -97,7 +97,24 @@
                 step="0.01"
                 required>
         </div>
+        <div class="form-group">
+            <label for="satuan">Satuan Produk</label>
 
+            <select name="satuan" id="satuan" required>
+                <option value="">-- Pilih Satuan --</option>
+
+                <option value="kg" {{ old('satuan') == 'kg' ? 'selected' : '' }}>Kilogram (kg)</option>
+                <option value="liter" {{ old('satuan') == 'liter' ? 'selected' : '' }}>Liter</option>
+                <option value="gram" {{ old('satuan') == 'gram' ? 'selected' : '' }}>Gram</option>
+                <option value="ikat" {{ old('satuan') == 'ikat' ? 'selected' : '' }}>Ikat</option>
+                <option value="buah" {{ old('satuan') == 'buah' ? 'selected' : '' }}>Buah</option>
+                <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : '' }}>Pcs</option>
+            </select>
+
+            @error('satuan')
+            <small style="color: red;">{{ $message }}</small>
+            @enderror
+        </div>
         <div class="form-group">
             <label for="stok">Stok Produk</label>
             <input

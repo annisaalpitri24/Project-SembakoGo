@@ -8,19 +8,35 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-    private function getStore()
+    private function pastikanAdmin(): void
     {
-        return Auth::user()->store;
+        abort_unless(
+            Auth::check() && Auth::user()->role === 'admin',
+            403,
+            'Akses hanya untuk admin.'
+        );
     }
 
     public function index()
     {
-        $store = $this->getStore();
+        $this->pastikanAdmin();
 
-        abort_if(!$store, 403, 'Data toko tidak ditemukan.');
+        $categories = Category::withCount('products')
+            ->orderBy('nama_kategori')
+            ->get();
 
-        $categories = Category::where('store_id', $store->id)
-            ->latest()
+        return view('admin.kategori.index', compact('categories'));
+    }
+    public function sellerIndex()
+    {
+        abort_unless(
+            Auth::check() && Auth::user()->role === 'penjual',
+            403,
+            'Akses hanya untuk penjual.'
+        );
+
+        $categories = Category::withCount('products')
+            ->orderBy('nama_kategori')
             ->get();
 
         return view('penjual.kategori.index', compact('categories'));
@@ -28,69 +44,68 @@ class CategoryController extends Controller
 
     public function create()
     {
-        abort_if(!$this->getStore(), 403, 'Data toko tidak ditemukan.');
+        $this->pastikanAdmin();
 
-        return view('penjual.kategori.create');
+        return view('admin.kategori.create');
     }
 
     public function store(Request $request)
     {
-        $store = $this->getStore();
-
-        abort_if(!$store, 403, 'Data toko tidak ditemukan.');
+        $this->pastikanAdmin();
 
         $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'nama_kategori' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:categories,nama_kategori',
+            ],
+            'deskripsi' => ['nullable', 'string'],
         ]);
 
-        $store->categories()->create($validated);
+        Category::create($validated);
 
         return redirect()
-            ->route('penjual.kategori.index')
+            ->route('admin.kategori.index')
             ->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function edit(Category $kategori)
     {
-        $store = $this->getStore();
+        $this->pastikanAdmin();
 
-        abort_if(!$store, 403, 'Data toko tidak ditemukan.');
-        abort_if((int) $kategori->store_id !== (int) $store->id, 403);
-
-        return view('penjual.kategori.edit', compact('kategori'));
+        return view('admin.kategori.edit', compact('kategori'));
     }
 
     public function update(Request $request, Category $kategori)
     {
-        $store = $this->getStore();
-
-        abort_if(!$store, 403, 'Data toko tidak ditemukan.');
-        abort_if((int) $kategori->store_id !== (int) $store->id, 403);
+        $this->pastikanAdmin();
 
         $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'nama_kategori' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:categories,nama_kategori,' . $kategori->id,
+            ],
+            'deskripsi' => ['nullable', 'string'],
         ]);
 
         $kategori->update($validated);
 
         return redirect()
-            ->route('penjual.kategori.index')
+            ->route('admin.kategori.index')
             ->with('success', 'Kategori berhasil diperbarui.');
     }
 
     public function destroy(Category $kategori)
     {
-        $store = $this->getStore();
-
-        abort_if(!$store, 403, 'Data toko tidak ditemukan.');
-        abort_if((int) $kategori->store_id !== (int) $store->id, 403);
+        $this->pastikanAdmin();
 
         $kategori->delete();
 
         return redirect()
-            ->route('penjual.kategori.index')
+            ->route('admin.kategori.index')
             ->with('success', 'Kategori berhasil dihapus.');
     }
 }

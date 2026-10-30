@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\AdminController;
@@ -6,13 +7,24 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterPembeliController;
 use App\Http\Controllers\Auth\RegisterPenjualController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PenjualController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// ==========================================
+// LANDING PAGE
+// ==========================================
+
+Route::get('/', [LandingPageController::class, 'index'])
+    ->name('home');
+
+Route::get('/produk/{product}', [LandingPageController::class, 'show'])
+    ->name('produk.detail');
+
+// ==========================================
+// AUTHENTICATION PEMBELI
+// ==========================================
 
 Route::get('/register-pembeli', [RegisterPembeliController::class, 'create'])
     ->name('register.pembeli');
@@ -29,6 +41,10 @@ Route::post('/login', [LoginController::class, 'store'])
 Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout');
 
+// ==========================================
+// AUTHENTICATION PENJUAL
+// ==========================================
+
 Route::get('/register-penjual', [RegisterPenjualController::class, 'create'])
     ->name('register.penjual');
 
@@ -38,17 +54,9 @@ Route::post('/register-penjual', [RegisterPenjualController::class, 'store'])
 Route::get('/penjual/dashboard', [PenjualController::class, 'dashboard'])
     ->name('penjual.dashboard');
 
-Route::get('/admin/login', [AdminController::class, 'login'])
-    ->name('admin.login');
-
-Route::post('/admin/login', [AdminController::class, 'loginProcess'])
-    ->name('admin.login.process');
-
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
-    ->name('admin.dashboard');
-
-Route::post('/admin/seller/{user}/approve', [AdminController::class, 'approveSeller'])
-    ->name('admin.seller.approve');
+// ==========================================
+// AUTHENTICATION GOOGLE
+// ==========================================
 
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])
     ->name('google.redirect');
@@ -56,7 +64,25 @@ Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])
     ->name('google.callback');
 
-Route::middleware(['auth'])->prefix('penjual')->name('penjual.')->group(function () {
+// ==========================================
+// ADMIN
+// ==========================================
+
+Route::get('/admin/login', [AdminController::class, 'login'])
+    ->name('admin.login');
+
+Route::post('/admin/login', [AdminController::class, 'loginProcess'])
+    ->name('admin.login.process');
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])
+        ->name('dashboard');
+
+    Route::post('/seller/{user}/approve', [AdminController::class, 'approveSeller'])
+        ->name('seller.approve');
+
+    // Admin memiliki akses penuh untuk mengelola kategori
     Route::get('/kategori', [CategoryController::class, 'index'])
         ->name('kategori.index');
 
@@ -74,7 +100,19 @@ Route::middleware(['auth'])->prefix('penjual')->name('penjual.')->group(function
 
     Route::delete('/kategori/{kategori}', [CategoryController::class, 'destroy'])
         ->name('kategori.destroy');
+});
 
+// ==========================================
+// PENJUAL
+// ==========================================
+
+Route::middleware(['auth'])->prefix('penjual')->name('penjual.')->group(function () {
+
+    // Penjual hanya dapat MELIHAT kategori
+    Route::get('/kategori', [CategoryController::class, 'sellerIndex'])
+        ->name('kategori.index');
+
+    // Profil toko
     Route::get('/profil-toko', function () {
         $store = auth()->user()->store;
 
@@ -83,6 +121,7 @@ Route::middleware(['auth'])->prefix('penjual')->name('penjual.')->group(function
         return view('penjual.profil', compact('store'));
     })->name('profil');
 
+    // Produk
     Route::get('/produk', [ProductController::class, 'index'])
         ->name('produk.index');
 

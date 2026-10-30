@@ -34,11 +34,10 @@ class ProductController extends Controller
 
     public function create()
     {
-        $store = $this->getStore();
+        $this->getStore();
 
-        $categories = Category::where('store_id', $store->id)
-            ->orderBy('nama_kategori')
-            ->get();
+        // Kategori dikelola admin dan digunakan bersama oleh semua penjual.
+        $categories = Category::orderBy('nama_kategori')->get();
 
         return view('penjual.produk.create', compact('categories'));
     }
@@ -49,15 +48,29 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'nama_produk' => ['required', 'string', 'max:255'],
+
             'category_id' => [
                 'required',
                 'integer',
-                Rule::exists('categories', 'id')
-                    ->where('store_id', $store->id),
+                Rule::exists('categories', 'id'),
             ],
-            'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+
+            'foto' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+            ],
+
             'harga' => ['required', 'numeric', 'min:0'],
+
+            'satuan' => [
+                'required',
+                Rule::in(['kg', 'liter', 'gram', 'ikat', 'buah', 'pcs']),
+            ],
+
             'deskripsi' => ['nullable', 'string'],
+
             'stok' => ['required', 'integer', 'min:0'],
         ]);
 
@@ -66,6 +79,7 @@ class ProductController extends Controller
                 ->store('produk', 'public');
         }
 
+        // Produk tetap dimiliki oleh toko penjual yang sedang login.
         $validated['store_id'] = $store->id;
 
         Product::create($validated);
@@ -81,9 +95,8 @@ class ProductController extends Controller
 
         abort_if($product->store_id != $store->id, 403);
 
-        $categories = Category::where('store_id', $store->id)
-            ->orderBy('nama_kategori')
-            ->get();
+        // Tampilkan seluruh kategori global saat mengedit produk.
+        $categories = Category::orderBy('nama_kategori')->get();
 
         return view(
             'penjual.produk.edit',
@@ -99,15 +112,29 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'nama_produk' => ['required', 'string', 'max:255'],
+
             'category_id' => [
                 'required',
                 'integer',
-                Rule::exists('categories', 'id')
-                    ->where('store_id', $store->id),
+                Rule::exists('categories', 'id'),
             ],
-            'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+
+            'foto' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+            ],
+
             'harga' => ['required', 'numeric', 'min:0'],
+
+            'satuan' => [
+                'required',
+                Rule::in(['kg', 'liter', 'gram', 'ikat', 'buah', 'pcs']),
+            ],
+
             'deskripsi' => ['nullable', 'string'],
+
             'stok' => ['required', 'integer', 'min:0'],
         ]);
 

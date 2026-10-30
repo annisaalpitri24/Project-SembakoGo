@@ -1,35 +1,35 @@
-@extends('penjual.layouts.app')
+@extends('admin.layouts.app')
 
-@section('title', 'Edit Kategori')
+@section('title', 'Tambah Kategori')
 
 @section('content')
-<div class="page-heading">
-    <div>
-        <h1>Edit Kategori</h1>
-        <p>Perbarui informasi kategori produk tokomu.</p>
-    </div>
 
-    <a href="{{ route('penjual.kategori.index') }}"
-        class="btn btn-secondary">
-        ← Kembali
-    </a>
+<div class="heading">
+    <h1>Tambah Kategori</h1>
+    <p>Buat kategori baru untuk mengelompokkan produk SembakoGo.</p>
 </div>
 
 <div class="card" style="max-width: 750px;">
 
-    <h2 style="margin-top: 0; margin-bottom: 8px;">
-        Informasi Kategori
-    </h2>
+    <div class="card-heading">
+        <div>
+            <h2>Informasi Kategori</h2>
+            <p class="muted">
+                Masukkan nama dan deskripsi kategori produk.
+            </p>
+        </div>
 
-    <p style="color: #64748b; margin-bottom: 25px;">
-        Ubah nama atau deskripsi kategori sesuai kebutuhan.
-    </p>
+        <a href="{{ route('admin.kategori.index') }}"
+            class="btn btn-secondary">
+            ← Kembali
+        </a>
+    </div>
 
     @if ($errors->any())
     <div class="alert alert-error">
-        <strong>Periksa kembali data yang kamu masukkan:</strong>
+        <strong>Terjadi kesalahan:</strong>
 
-        <ul style="margin-bottom: 0;">
+        <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
             @endforeach
@@ -37,12 +37,10 @@
     </div>
     @endif
 
-    <form
-        action="{{ route('penjual.kategori.update', $kategori) }}"
+    <form action="{{ route('admin.kategori.store') }}"
         method="POST">
 
         @csrf
-        @method('PUT')
 
         <div class="form-group">
             <label for="nama_kategori">Nama Kategori</label>
@@ -51,7 +49,7 @@
                 type="text"
                 id="nama_kategori"
                 name="nama_kategori"
-                value="{{ old('nama_kategori', $kategori->nama_kategori) }}"
+                value="{{ old('nama_kategori') }}"
                 placeholder="Contoh: Sayuran"
                 maxlength="255"
                 required>
@@ -63,19 +61,19 @@
             <textarea
                 id="deskripsi"
                 name="deskripsi"
-                placeholder="Masukkan deskripsi kategori (opsional)">{{ old('deskripsi', $kategori->deskripsi) }}</textarea>
+                placeholder="Contoh: Aneka sayuran segar untuk kebutuhan sehari-hari.">{{ old('deskripsi') }}</textarea>
 
-            <small style="color: #64748b;">
-                Deskripsi boleh dikosongkan.
+            <small class="muted">
+                Deskripsi bersifat opsional dan boleh dikosongkan.
             </small>
         </div>
 
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <button type="submit" class="btn btn-primary">
-                Simpan Perubahan
+                Simpan Kategori
             </button>
 
-            <a href="{{ route('penjual.kategori.index') }}"
+            <a href="{{ route('admin.kategori.index') }}"
                 class="btn btn-secondary">
                 Batal
             </a>
@@ -83,4 +81,5 @@
 
     </form>
 </div>
+
 @endsection

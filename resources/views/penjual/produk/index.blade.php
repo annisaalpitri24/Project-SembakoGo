@@ -42,6 +42,7 @@
                     <th>Nama Produk</th>
                     <th>Kategori</th>
                     <th>Harga</th>
+                    <th>Satuan</th>
                     <th>Stok</th>
                     <th>Aksi</th>
                 </tr>
@@ -50,70 +51,53 @@
             <tbody>
                 @forelse ($products as $product)
                 <tr>
-                    <td>
-                        {{ $products->firstItem() + $loop->index }}
-                    </td>
+                    <td>{{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage() }}</td>
 
                     <td>
                         @if ($product->foto)
                         <img
                             src="{{ asset('storage/' . $product->foto) }}"
                             alt="{{ $product->nama_produk }}"
-                            style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                            width="70">
                         @else
-                        <div style="width: 60px; height: 60px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 24px;">📦</span>
-                        </div>
+                        -
                         @endif
                     </td>
 
                     <td>{{ $product->nama_produk }}</td>
 
-                    <td>
-                        {{ $product->category?->nama_kategori ?? '-' }}
-                    </td>
+                    <td>{{ $product->category->nama_kategori ?? '-' }}</td>
+
+                    <td>Rp{{ number_format($product->harga, 0, ',', '.') }}</td>
+
+                    <td>{{ $product->satuan }}</td>
+
+                    <td>{{ $product->stok }}</td>
 
                     <td>
-                        Rp{{ number_format((float) $product->harga, 0, ',', '.') }}
-                    </td>
+                        <a href="{{ route('penjual.produk.edit', $product->id) }}"
+                            class="btn btn-secondary">
+                            Edit
+                        </a>
 
-                    <td>
-                        {{ $product->stok }}
-                    </td>
+                        <form
+                            action="{{ route('penjual.produk.destroy', $product->id) }}"
+                            method="POST"
+                            style="display: inline;"
+                            onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
+                            @csrf
+                            @method('DELETE')
 
-                    <td>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <a
-                                href="{{ route('penjual.produk.edit', $product->id) }}"
-                                class="btn btn-secondary">
-                                Edit
-                            </a>
-
-                            <form
-                                action="{{ route('penjual.produk.destroy', $product->id) }}"
-                                method="POST"
-                                onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-danger">
-                                    Hapus
-                                </button>
-                            </form>
-                        </div>
+                            <button type="submit" class="btn btn-danger">
+                                Hapus
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" style="text-align: center; padding: 35px;">
-                        <div style="font-size: 32px; margin-bottom: 8px;">📦</div>
-                        <strong>Belum ada produk</strong>
-                        <p style="color: #64748b; margin-bottom: 15px;">
-                            Tambahkan produk pertama untuk mulai mengelola stok toko.
-                        </p>
-                        <a href="{{ route('penjual.produk.create') }}" class="btn btn-primary">
-                            Tambah Produk
-                        </a>
+                    <td colspan="8" style="text-align: center;">
+                        Belum ada produk.
                     </td>
                 </tr>
                 @endforelse

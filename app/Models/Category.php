@@ -3,18 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
     protected $fillable = [
-        'store_id',
         'nama_kategori',
         'deskripsi',
     ];
 
-    public function store(): BelongsTo
+    public function products(): HasMany
     {
-        return $this->belongsTo(Store::class);
+        return $this->hasMany(Product::class);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,20 +58,54 @@ class AdminController extends Controller
     // DASHBOARD ADMIN
     // =========================
 
+
     public function dashboard()
     {
-        // Pastikan yang mengakses adalah admin
         if (!Auth::check() || Auth::user()->role !== 'admin') {
             return redirect()->route('admin.login');
         }
 
-        $penjualMenunggu = User::where('role', 'penjual')
-            ->where('status', 'pending')
+        // Mengambil SEMUA penjual, apa pun statusnya
+        $semuaPenjual = User::where('role', 'penjual')
             ->with('store')
+            ->latest()
             ->get();
 
-        return view('admin.dashboard', compact('penjualMenunggu'));
+        // Menghitung jumlah penjual berdasarkan status
+        $jumlahPenjual = User::where('role', 'penjual')->count();
+
+        $jumlahPenjualAktif = User::where('role', 'penjual')
+            ->where('status', 'active')
+            ->count();
+
+        $jumlahPenjualMenunggu = User::where('role', 'penjual')
+            ->where('status', 'pending')
+            ->count();
+
+        $jumlahPenjualDitolak = User::where('role', 'penjual')
+            ->where('status', 'rejected')
+            ->count();
+
+        $jumlahProduk = Product::count();
+
+        $jumlahKategori = Category::count();
+
+        $kategori = Category::withCount('products')
+            ->orderBy('nama_kategori')
+            ->get();
+
+        return view('admin.dashboard', compact(
+            'semuaPenjual',
+            'jumlahPenjual',
+            'jumlahPenjualAktif',
+            'jumlahPenjualMenunggu',
+            'jumlahPenjualDitolak',
+            'jumlahProduk',
+            'jumlahKategori',
+            'kategori'
+        ));
     }
+
 
 
     // =========================

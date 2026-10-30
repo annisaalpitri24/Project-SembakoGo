@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>SembakoGo - Kebutuhan Harian Lebih Dekat</title>
 
     <style>
@@ -12,692 +11,612 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        }
+
+        :root {
+            --green: #00865f;
+            --green-dark: #006b4f;
+            --green-light: #e1f7ef;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+            --bg-page: #f8f9fa;
+            --bg-white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background: #f8faf9;
-            color: #102c2a;
+            background: var(--bg-page);
+            color: var(--text-dark);
         }
 
-        /* =========================
-           NAVBAR
-        ========================== */
-
+        /* TOP NAVBAR (GREEN) */
         .navbar {
-            height: 78px;
-            background: white;
-            border-bottom: 1px solid #edf1ef;
-
+            min-height: 70px;
+            background: var(--green);
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 7%;
+            gap: 24px;
+            padding: 12px 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-
-            color: #006b4f;
-            font-size: 21px;
-            font-weight: bold;
+            gap: 12px;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+            white-space: nowrap;
         }
 
         .logo-icon {
-            width: 38px;
-            height: 38px;
-
-            background: #e1f7ef;
+            width: 45px;
+            height: 45px;
+            background: #ffffff;
             color: #00865f;
-
-            border-radius: 10px;
-
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 20px;
+            font-size: 24px;
         }
 
+        .logo-highlight {
+            color: #53b995;
+        }
+
+        /* SEARCH BAR */
+        .search-container {
+            flex: 1;
+            max-width: 700px;
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            padding: 4px;
+            margin: 0 20px;
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-container button {
+            background: var(--green);
+            border: none;
+            border-radius: 6px;
+            width: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* RIGHT NAV */
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 28px;
+            justify-content: flex-end;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: #fff;
+            font-size: 14px;
         }
 
         .nav-menu a {
             text-decoration: none;
-            color: #526766;
-            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
         }
 
         .nav-menu a:hover {
-            color: #00865f;
+            opacity: 0.8;
         }
 
-        .nav-login {
-            padding: 11px 22px;
-            border: 1px solid #00865f;
-            border-radius: 9px;
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.4);
+        }
 
-            color: #00865f !important;
+        .nav-cart {
+            position: relative;
+            font-size: 20px;
+        }
+
+        .nav-cart span {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #fff;
+            color: var(--green);
+            font-size: 11px;
             font-weight: bold;
-        }
-
-        .nav-login:hover {
-            background: #eaf8f3;
-        }
-
-        .nav-register {
-            padding: 12px 22px;
-            background: #00865f;
-            color: white !important;
-
-            border-radius: 9px;
-            font-weight: bold;
-        }
-
-        .nav-register:hover {
-            background: #006f4f;
-        }
-
-        /* =========================
-           TOMBOL LOGIN ADMIN
-        ========================== */
-
-        .nav-admin {
-            padding: 11px 20px;
-            background: #102c2a;
-            color: white !important;
-
-            border-radius: 9px;
-            font-weight: bold;
-
-            transition: 0.2s;
-        }
-
-        .nav-admin:hover {
-            background: #006b4f;
-            color: white !important;
-        }
-
-        /* =========================
-           HERO
-        ========================== */
-
-        .hero {
-            min-height: calc(100vh - 78px);
-
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
+            justify-content: center;
+        }
 
-            padding: 70px 7%;
+        /* SUB NAVBAR (WHITE) */
+        .sub-navbar {
+            background: #fff;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
 
-            background:
-                radial-gradient(
-                    circle at 90% 20%,
-                    rgba(0, 134, 95, 0.08),
-                    transparent 30%
-                ),
-                #f8faf9;
+        .sub-nav-item {
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-nav-item.active {
+            color: var(--green);
+            border-bottom: 2px solid var(--green);
+        }
+
+        .sub-nav-item:hover {
+            color: var(--green);
+        }
+
+        /* HERO BANNER */
+        .hero {
+            padding: 20px 7%;
+        }
+
+        .hero-banner {
+            background: var(--green-light);
+            /* Warna hijau muda */
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 50px;
+            position: relative;
+            overflow: hidden;
+            min-height: 350px;
         }
 
         .hero-left {
-            width: 55%;
+            width: 50%;
+            z-index: 2;
         }
 
-        .badge {
-            display: inline-block;
-
-            padding: 8px 15px;
-
-            background: #e1f7ef;
-            color: #00865f;
-
-            border-radius: 30px;
-
-            font-size: 13px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--green);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
-
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .hero h1 {
-            font-size: 58px;
-            line-height: 1.08;
-
-            color: #102c2a;
-
-            max-width: 650px;
-
-            margin-bottom: 25px;
+            font-size: 42px;
+            line-height: 1.1;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 800;
         }
 
         .hero h1 span {
-            color: #00865f;
+            color: var(--green);
         }
 
-        .hero-description {
-            max-width: 570px;
-
-            color: #647776;
-
-            font-size: 17px;
-            line-height: 1.8;
-
-            margin-bottom: 35px;
+        .hero p {
+            color: #4a5568;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 450px;
         }
-
-        /* =========================
-           BUTTON HERO
-        ========================== */
-
-        .hero-buttons {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-
-            margin-bottom: 40px;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 15px 25px;
-
-            background: #00865f;
-            color: white;
-
-            text-decoration: none;
-
-            border-radius: 10px;
-
-            font-size: 14px;
-            font-weight: bold;
-
-            box-shadow: 0 8px 20px rgba(0, 134, 95, 0.16);
-
-            transition: 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: #006f4f;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 15px 25px;
-
-            background: white;
-            color: #00865f;
-
-            text-decoration: none;
-
-            border: 1px solid #d4e4df;
-            border-radius: 10px;
-
-            font-size: 14px;
-            font-weight: bold;
-
-            transition: 0.2s;
-        }
-
-        .btn-secondary:hover {
-            border-color: #00865f;
-            background: #f1faf7;
-        }
-
-        /* =========================
-           INFO
-        ========================== */
 
         .hero-info {
             display: flex;
-            gap: 35px;
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .info-icon {
-            width: 38px;
-            height: 38px;
-
-            background: white;
-            border: 1px solid #e1ebe7;
-
-            border-radius: 10px;
-
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-
             font-size: 18px;
+            color: var(--green);
         }
 
         .info-text strong {
             display: block;
-
-            color: #263b4a;
             font-size: 13px;
-
-            margin-bottom: 3px;
+            color: var(--text-dark);
         }
 
         .info-text span {
-            color: #879592;
             font-size: 11px;
+            color: var(--text-muted);
         }
 
-        /* =========================
-           HERO KANAN
-        ========================== */
-
-        .hero-right {
-            width: 45%;
-
-            display: flex;
+        .btn-primary {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-
-            position: relative;
-        }
-
-        .hero-card {
-            width: 390px;
-            min-height: 400px;
-
-            background: #006b4f;
-
-            border-radius: 35px;
-
-            padding: 35px;
-
-            position: relative;
-            overflow: hidden;
-
-            box-shadow: 0 25px 60px rgba(0, 107, 79, 0.18);
-        }
-
-        .hero-circle-1 {
-            width: 280px;
-            height: 280px;
-
-            border: 35px solid rgba(255, 255, 255, 0.06);
-
-            border-radius: 50%;
-
-            position: absolute;
-
-            top: -150px;
-            right: -100px;
-        }
-
-        .hero-circle-2 {
-            width: 250px;
-            height: 250px;
-
-            border: 30px solid rgba(255, 255, 255, 0.06);
-
-            border-radius: 50%;
-
-            position: absolute;
-
-            bottom: -140px;
-            left: -100px;
-        }
-
-        .card-content {
-            position: relative;
-            z-index: 2;
-
-            color: white;
-        }
-
-        .card-label {
-            color: #a9ead4;
-
-            font-size: 13px;
+            gap: 10px;
+            background: var(--green);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
             font-weight: bold;
-
-            letter-spacing: 1.5px;
-
-            margin-bottom: 15px;
-        }
-
-        .card-content h2 {
-            font-size: 30px;
-            line-height: 1.2;
-
-            margin-bottom: 15px;
-        }
-
-        .card-content p {
-            color: #d2eee4;
-
             font-size: 14px;
-            line-height: 1.7;
-
-            margin-bottom: 25px;
-        }
-
-        .shopping-bag {
-            width: 170px;
-            height: 135px;
-
-            background: #ffdf72;
-
-            border-radius: 30px;
-
-            margin: 25px auto 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 70px;
-
-            transform: rotate(-4deg);
-
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        /* =========================
-           PILIHAN DAFTAR
-        ========================== */
-
-        .register-section {
-            padding: 70px 7%;
-
-            background: white;
-
-            text-align: center;
-        }
-
-        .section-label {
-            color: #00865f;
-
-            font-size: 13px;
-            font-weight: bold;
-
-            letter-spacing: 1.5px;
-
-            margin-bottom: 10px;
-        }
-
-        .register-section h2 {
-            font-size: 34px;
-
-            color: #102c2a;
-
-            margin-bottom: 12px;
-        }
-
-        .section-description {
-            color: #718096;
-
-            font-size: 15px;
-
-            margin-bottom: 35px;
-        }
-
-        .register-cards {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 20px;
-
-            max-width: 900px;
-
-            margin: auto;
-        }
-
-        .register-card {
-            width: 330px;
-
-            border: 1px solid #e0e9e5;
-
-            border-radius: 17px;
-
-            padding: 30px;
-
-            text-align: left;
-
-            background: white;
-
             transition: 0.2s;
         }
 
-        .register-card:hover {
-            transform: translateY(-4px);
-
-            box-shadow: 0 15px 35px rgba(0, 80, 60, 0.08);
+        .btn-primary:hover {
+            background: var(--green-dark);
         }
 
-        .register-icon {
-            width: 50px;
-            height: 50px;
+        .hero-right {
+            width: 50%;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+        }
 
-            border-radius: 13px;
+        .hero-image-container {
+            width: 100%;
+            height: 350px;
+            background: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') no-repeat center right;
+            background-size: cover;
+            border-radius: 0 16px 16px 0;
+            position: absolute;
+            right: -50px;
+            top: -40px;
+            bottom: -40px;
+            mask-image: linear-gradient(to right, transparent, black 20%);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
+            z-index: 1;
+        }
 
-            background: #e1f7ef;
+        .hero-sticker {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--green);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            transform: rotate(-5deg);
+            z-index: 3;
+            box-shadow: 0 4px 10px rgba(0, 134, 95, 0.3);
+        }
 
+        /* KATEGORI */
+        .category-section {
+            padding: 0 7% 30px;
+        }
+
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 12px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .category-chip {
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 24px;
-
-            margin-bottom: 18px;
+            padding: 12px 5px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            transition: 0.2s;
         }
 
-        .register-card h3 {
-            font-size: 20px;
-
-            color: #163d39;
-
-            margin-bottom: 10px;
+        .category-chip:hover,
+        .category-chip.active {
+            border-color: var(--green);
+            color: var(--green);
+            background: var(--green-light);
         }
 
-        .register-card p {
-            color: #718096;
+        /* PRODUK SECTION */
+        .catalog-section {
+            padding: 20px 7% 60px;
+        }
 
-            font-size: 13px;
-
-            line-height: 1.7;
-
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .card-link {
-            color: #00865f;
-
-            text-decoration: none;
-
-            font-size: 13px;
-
-            font-weight: bold;
-        }
-
-        .card-link:hover {
-            text-decoration: underline;
-        }
-
-        /* =========================
-           FOOTER
-        ========================== */
-
-        footer {
-            padding: 25px 7%;
-
-            background: #006b4f;
-
-            color: #bce7d8;
-
+        .section-title {
             display: flex;
-
             align-items: center;
-            justify-content: space-between;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
 
+        .section-title .icon {
+            color: var(--green);
+            font-size: 24px;
+        }
+
+        .see-all {
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* GRID PRODUK */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .product-badge.diskon {
+            background: #e53e3e;
+        }
+
+        .product-photo-link {
+            display: block;
+            background: #f8f9fa;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-image-placeholder {
+            font-size: 40px;
+            color: #cbd5e0;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin-bottom: 8px;
+            height: 36px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .price-unit {
+            font-size: 11px;
+            font-weight: normal;
+            color: var(--text-muted);
+        }
+
+        .price-old {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .product-rating .star {
+            color: #f6ad55;
+        }
+
+        .product-link {
+            display: block;
+            text-align: center;
+            background: var(--green-light);
+            color: var(--green);
+            padding: 8px;
+            border-radius: 6px;
+            text-decoration: none;
             font-size: 12px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .product-link:hover {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .empty-products {
+            grid-column: 1 / -1;
+            padding: 40px;
+            text-align: center;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px dashed var(--border);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 30px 7%;
+            background: #fff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
         }
 
         footer strong {
-            color: white;
+            color: var(--green);
         }
 
-        /* =========================
-           USER LOGIN
-        ========================== */
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-name {
-            color: #263b4a;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .logout-button {
-            border: none;
-            background: transparent;
-
-            color: #d14b4b;
-
-            cursor: pointer;
-
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================== */
-
-        @media (max-width: 950px) {
-
-            .hero {
-                flex-direction: column;
-                gap: 60px;
-
-                padding-top: 60px;
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
 
-            .hero-left,
-            .hero-right {
-                width: 100%;
+            .category-list {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-banner {
+                flex-direction: column;
+                padding: 30px;
             }
 
             .hero-left {
-                text-align: center;
+                width: 100%;
+                margin-bottom: 30px;
             }
 
-            .hero h1 {
-                margin-left: auto;
-                margin-right: auto;
+            .hero-right {
+                width: 100%;
+                display: none;
             }
 
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
-
-            .hero-buttons,
-            .hero-info {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 700px) {
 
             .navbar {
-                padding: 0 5%;
+                flex-wrap: wrap;
             }
 
-            .nav-menu {
-                gap: 8px;
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin: 10px 0 0 0;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .nav-menu a:not(.nav-login):not(.nav-register):not(.nav-admin) {
-                display: none;
-            }
-
-            .nav-login,
-            .nav-register,
-            .nav-admin {
-                padding: 9px 12px;
-                font-size: 12px;
-            }
-
-            .hero {
-                padding: 50px 5%;
+            .category-list {
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .hero h1 {
-                font-size: 42px;
+                font-size: 28px;
             }
 
             .hero-info {
                 flex-direction: column;
-                align-items: center;
-            }
-
-            .register-cards {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .register-card {
-                width: 100%;
-                max-width: 400px;
-            }
-
-            footer {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 500px) {
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-            }
-
-            .hero-card {
-                width: 100%;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: flex-end;
-            }
-
-            .nav-admin {
-                display: none;
+                gap: 15px;
             }
         }
     </style>
@@ -705,339 +624,210 @@
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
-
+    <!-- TOP NAVBAR -->
     <nav class="navbar">
+        <a class="logo" href="{{ route('home') }}">
+            <span class="logo-icon">🛒</span>
+            <span>Sembako<span class="logo-highlight">Go</span></span>
+        </a>
 
-        <div class="logo">
-
-            <div class="logo-icon">
-                🛒
-            </div>
-
-            <span>
-                Sembako<span style="color: #53b995;">Go</span>
-            </span>
-
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" placeholder="Cari produk sembako, sayur, buah, dan lainnya...">
+            <button>🔍</button>
         </div>
 
-
+        <!-- RIGHT MENU -->
         <div class="nav-menu">
-
-            <a href="#daftar">
-                Tentang
-            </a>
-
             @auth
-
-                <span class="user-name">
-                    Halo, {{ auth()->user()->name }}
-                </span>
-
-                <form
-                    action="{{ route('logout') }}"
-                    method="POST"
-                    style="display: inline;">
-
+            <div class="user-area" style="display:flex; align-items:center; gap:15px;">
+                <span style="font-weight:bold;">Halo, {{ auth()->user()->name }}</span>
+                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                     @csrf
-
-                    <button
-                        type="submit"
-                        class="logout-button">
-
-                        Logout
-
-                    </button>
-
+                    <button type="submit" style="background:none; border:none; color:#fff; cursor:pointer; font-size:14px;">Logout</button>
                 </form>
-
+            </div>
             @else
-
-                <a
-                    href="{{ route('login') }}"
-                    class="nav-login">
-
-                    Masuk
-
-                </a>
-
-                <a
-                    href="{{ route('register.pembeli') }}"
-                    class="nav-register">
-
-                    Daftar
-
-                </a>
-
-                <!-- LOGIN ADMIN -->
-                <a
-                    href="{{ route('admin.login') }}"
-                    class="nav-admin">
-
-                    Admin
-
-                </a>
-
+            <a href="{{ route('login') }}">👤 Masuk</a>
+            <a href="{{ route('register.pembeli') }}">Daftar</a>
+            <a href="{{ route('admin.login') }}">Admin</a>
+            <div class="nav-divider"></div>
             @endauth
-
+            <a href="#" class="nav-cart">🛒 <span>0</span></a>
         </div>
-
     </nav>
 
+    <!-- SUB NAVBAR -->
+    <div class="sub-navbar">
 
-    <!-- =========================
-         HERO
-    ========================== -->
+        <a href="#beranda" class="sub-nav-item active">Beranda</a>
+        <a href="#produk" class="sub-nav-item">Produk</a>
 
-    <section class="hero">
+        <a href="#daftar" class="sub-nav-item">Tentang Kami</a>
+    </div>
 
+    <!-- HERO SECTION -->
+    <section class="hero" id="beranda">
+        <div class="hero-banner">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    🚚 Belanja Sembako
+                </div>
+                <h1>Lebih Mudah,<br><span>Lebih Hemat!</span></h1>
+                <p>Semua kebutuhan harian Anda tersedia di SembakoGo</p>
 
-        <!-- KIRI -->
-
-        <div class="hero-left">
-
-            <div class="badge">
-                🛒 PLATFORM BELANJA SEMBAKO
-            </div>
-
-
-            <h1>
-                Kebutuhan harian,
-                <span>selalu lebih dekat.</span>
-            </h1>
-
-
-            <p class="hero-description">
-
-                SembakoGo membantu kamu menemukan berbagai
-                kebutuhan sehari-hari dari penjual terpercaya.
-                Belanja lebih mudah, praktis, dan nyaman.
-
-            </p>
-
-
-            <div class="hero-buttons">
-
-                <a
-                    href="{{ route('login') }}"
-                    class="btn-primary">
-
-                    Masuk ke SembakoGo →
-
-                </a>
-
-
-                <a
-                    href="{{ route('register.pembeli') }}"
-                    class="btn-secondary">
-
-                    Daftar sebagai Pembeli
-
-                </a>
-
-            </div>
-
-
-            <div class="hero-info">
-
-                <div class="info-item">
-
-                    <div class="info-icon">
-                        🛍️
+                <div class="hero-info">
+                    <div class="info-item">
+                        <div class="info-icon">✔️</div>
+                        <div class="info-text">
+                            <strong>Produk</strong>
+                            <span>Berkualitas</span>
+                        </div>
                     </div>
-
-                    <div class="info-text">
-
-                        <strong>
-                            Produk Beragam
-                        </strong>
-
-                        <span>
-                            Kebutuhan sehari-hari
-                        </span>
-
+                    <div class="info-item">
+                        <div class="info-icon">🚀</div>
+                        <div class="info-text">
+                            <strong>Pengiriman</strong>
+                            <span>Cepat</span>
+                        </div>
                     </div>
-
+                    <div class="info-item">
+                        <div class="info-icon">💰</div>
+                        <div class="info-text">
+                            <strong>Harga</strong>
+                            <span>Terbaik</span>
+                        </div>
+                    </div>
                 </div>
 
+                <a href="#produk" class="btn-primary">Belanja Sekarang →</a>
+            </div>
 
-                <div class="info-item">
+            <div class="hero-right">
+                <div class="hero-sticker">Sembako Lengkap<br>Harga Bersaing</div>
+                <div class="hero-image-container"></div>
+            </div>
+        </div>
+    </section>
 
-                    <div class="info-icon">
-                        🏪
-                    </div>
+    <!-- KATEGORI SECTION -->
+    <section class="category-section" id="kategori">
+        <div class="category-list">
+            <a href="{{ route('home') }}#produk" class="category-chip {{ !request()->filled('kategori') ? 'active' : '' }}">Semua Produk</a>
 
-                    <div class="info-text">
+            @foreach ($categories as $category)
+            <a href="{{ route('home', ['kategori' => $category->id]) }}#produk" class="category-chip {{ (string) request('kategori') === (string) $category->id ? 'active' : '' }}">
+                {{ $category->nama_kategori }}
+            </a>
+            @endforeach
+        </div>
+    </section>
 
-                        <strong>
-                            Penjual Terpercaya
-                        </strong>
+    <!-- PRODUK SECTION -->
+    <section class="catalog-section" id="produk">
 
-                        <span>
-                            Toko telah divalidasi
-                        </span>
-
-                    </div>
-
-                </div>
-
+        <div class="section-header">
+            <div class="section-title">
+                <span class="icon">🔥</span> Produk Pilihan
             </div>
 
         </div>
 
+        <div class="product-grid">
+            @forelse ($products as $product)
+            <article class="product-card">
 
-        <!-- KANAN -->
+                <a href="{{ route('produk.detail', $product->id) }}" class="product-photo-link">
+                    @if ($product->foto)
+                    <img class="product-image"
+                        src="{{ asset('storage/' . $product->foto) }}"
+                        alt="{{ $product->nama_produk }}"
+                        loading="lazy">
+                    @else
+                    <div class="product-image-placeholder">🛒</div>
+                    @endif
+                </a>
 
-        <div class="hero-right">
+                <div class="product-info">
+                    <h3 class="product-name">{{ $product->nama_produk }}</h3>
 
-            <div class="hero-card">
-
-                <div class="hero-circle-1"></div>
-                <div class="hero-circle-2"></div>
-
-
-                <div class="card-content">
-
-                    <div class="card-label">
-                        SEMBAKOGO
+                    <div class="product-price">
+                        Rp{{ number_format($product->harga, 0, ',', '.') }}
+                        <span class="price-unit">/ {{ $product->satuan }}</span>
                     </div>
 
-                    <h2>
-                        Belanja kebutuhan
-                        jadi lebih simpel.
-                    </h2>
-
-                    <p>
-                        Cari produk, pilih toko,
-                        dan nikmati pengalaman belanja
-                        yang lebih praktis.
-                    </p>
-
-
-                    <div class="shopping-bag">
-                        🛍️
+                    <div class="product-rating">
+                        <span>🏪</span>
+                        <span>
+                            {{ $product->store->nama_toko ?? 'Nama toko belum tersedia' }}
+                        </span>
                     </div>
 
+                    @if ($product->stok > 0)
+                    <a href="{{ route('produk.detail', $product->id) }}" class="product-link">
+                        Lihat Detail
+                    </a>
+                    @else
+                    <a href="{{ route('produk.detail', $product->id) }}"
+                        class="product-link"
+                        style="background:#e2e8f0; color:#718096;">
+                        Stok Habis
+                    </a>
+                    @endif
                 </div>
+            </article>
 
+            @empty
+            <div class="empty-products">
+                <div style="font-size:40px; margin-bottom:12px;">🛒</div>
+                <h3>Produk belum tersedia</h3>
+                <p style="margin-top:8px; color:#718096;">
+                    Coba pilih kategori lain atau kunjungi kembali nanti.
+                </p>
             </div>
-
+            @endforelse
         </div>
+
+        @if ($products->hasPages())
+        <div class="pagination-area" style="margin-top:30px;">
+            {{ $products->links() }}
+        </div>
+        @endif
 
     </section>
 
-
-    <!-- =========================
-         PILIHAN DAFTAR
-    ========================== -->
-
+    <!-- DAFTAR SECTION -->
     @guest
+    <section class="register-section" id="daftar" style="padding: 40px 7%; text-align: center; background: #fff; border-top: 1px solid #e2e8f0;">
+        <div style="color: var(--green); font-size: 12px; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 8px;">BERGABUNG DENGAN SEMBAKOGO</div>
+        <h2 style="font-size: 28px; color: var(--text-dark); margin-bottom: 10px;">Mau belanja atau berjualan?</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">Pilih akun yang sesuai dengan kebutuhanmu.</p>
 
-    <section
-        class="register-section"
-        id="daftar">
-
-        <div class="section-label">
-            BERGABUNG DENGAN SEMBAKOGO
-        </div>
-
-
-        <h2>
-            Mau belanja atau berjualan?
-        </h2>
-
-
-        <p class="section-description">
-            Pilih akun yang sesuai dengan kebutuhanmu.
-        </p>
-
-
-        <div class="register-cards">
-
-
-            <!-- PEMBELI -->
-
-            <div class="register-card">
-
-                <div class="register-icon">
-                    🛒
-                </div>
-
-                <h3>
-                    Saya ingin Belanja
-                </h3>
-
-                <p>
-                    Buat akun pembeli untuk mencari
-                    berbagai kebutuhan sembako dan
-                    melakukan pemesanan.
-                </p>
-
-                <a
-                    href="{{ route('register.pembeli') }}"
-                    class="card-link">
-
-                    Daftar sebagai Pembeli →
-
-                </a>
-
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <div style="border: 1px solid var(--border); padding: 25px; border-radius: 12px; width: 300px; text-align: left;">
+                <div style="font-size: 24px; margin-bottom: 10px;">🛒</div>
+                <h3 style="margin-bottom: 10px; color: var(--text-dark);">Saya ingin Belanja</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Buat akun pembeli untuk mencari berbagai kebutuhan sembako dan melakukan pemesanan.</p>
+                <a href="{{ route('register.pembeli') }}" style="color: var(--green); text-decoration: none; font-weight: bold; font-size: 13px;">Daftar sebagai Pembeli →</a>
             </div>
-
-
-            <!-- PENJUAL -->
-
-            <div class="register-card">
-
-                <div class="register-icon">
-                    🏪
-                </div>
-
-                <h3>
-                    Saya ingin Berjualan
-                </h3>
-
-                <p>
-                    Daftarkan tokomu di SembakoGo
-                    dan mulai menawarkan produk
-                    kepada pembeli.
-                </p>
-
-                <a
-                    href="{{ route('register.penjual') }}"
-                    class="card-link">
-
-                    Daftar sebagai Penjual →
-
-                </a>
-
+            <div style="border: 1px solid var(--border); padding: 25px; border-radius: 12px; width: 300px; text-align: left;">
+                <div style="font-size: 24px; margin-bottom: 10px;">🏪</div>
+                <h3 style="margin-bottom: 10px; color: var(--text-dark);">Saya ingin Berjualan</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Daftarkan tokomu di SembakoGo dan mulai menawarkan produk kepada pembeli.</p>
+                <a href="{{ route('register.penjual') }}" style="color: var(--green); text-decoration: none; font-weight: bold; font-size: 13px;">Daftar sebagai Penjual →</a>
             </div>
-
-
         </div>
-
     </section>
-
     @endguest
 
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
+    <!-- FOOTER -->
     <footer>
-
         <div>
-            © {{ date('Y') }}
-            <strong>SembakoGo</strong>.
-            Semua hak dilindungi.
+            © {{ date('Y') }} <strong>SembakoGo</strong>. Semua hak dilindungi.
         </div>
-
         <div>
             Belanja lebih mudah, lebih dekat.
         </div>
-
     </footer>
 
 </body>

@@ -12,7 +12,7 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-public function store(Request $request)
+    public function store(Request $request)
     {
         // Validasi input
         $credentials = $request->validate([
@@ -27,7 +27,7 @@ public function store(Request $request)
                 ->withErrors([
                     'email' => 'Email atau password salah.',
                 ])
-                ->onlyInput('email');
+                ->withInput($request->only('email', 'role'));
         }
 
         // Regenerasi session setelah berhasil login

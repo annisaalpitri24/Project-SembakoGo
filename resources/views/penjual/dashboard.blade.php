@@ -14,9 +14,9 @@
         <p>Kelola toko dan kategori produkmu dari halaman ini.</p>
     </div>
 
-    <a href="{{ route('penjual.kategori.create') }}"
+    <a href="{{ route('penjual.kategori.index') }}"
         class="btn btn-primary">
-        + Tambah Kategori
+        Lihat Kategori
     </a>
 </div>
 
@@ -31,10 +31,7 @@
     <div class="card">
         <div class="stat-label">Total Kategori</div>
         <div class="stat-number">
-            {{ \App\Models\Category::where(
-                    'store_id',
-                    auth()->user()->store->id ?? 0
-                )->count() }}
+            {{ \App\Models\Category::count() }}
         </div>
     </div>
 
